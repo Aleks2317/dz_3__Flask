@@ -11,3 +11,5 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Подтвердите ваш пароль:', validators=[DataRequired(), EqualTo('password')])
 
 
+class Activate_user(FlaskForm):
+    pass
