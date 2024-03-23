@@ -9,7 +9,3 @@ class RegistrationForm(FlaskForm):
     email = EmailField('Введите ваш email:', validators=[DataRequired(), Email()])
     password = PasswordField('Введите ваш пароль:', validators=[DataRequired(), Length(min=4)])
     confirm_password = PasswordField('Подтвердите ваш пароль:', validators=[DataRequired(), EqualTo('password')])
-
-
-class Activate_user(FlaskForm):
-    pass
