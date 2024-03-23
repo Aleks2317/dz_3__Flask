@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, flash, redirect, url_for
+from flask import Flask, request, render_template
 from flask_wtf.csrf import CSRFProtect
 from models_db import db, User
 from form import RegistrationForm
@@ -20,23 +20,6 @@ def index():
     return render_template('start_page.html', **content)
 
 
-@app.route('/user_activate/<name>')
-def user_activate(name):
-    print(f'{name=}')
-    user = User.query.filter(User.name == name)
-    print(user)
-
-    # context = {
-    #     'title': f'Hello {user.name} {user.surname}',
-    #     'user': {
-    #         'name': user.name,
-    #         'surname': user.surname,
-    #         'email': user.email,
-    #     }
-    # }
-    return render_template('user_activate.html')
-
-
 @app.route('/register/', methods=['POST', 'GET'])
 def register():
 
@@ -49,7 +32,15 @@ def register():
         user = User(name=name, surname=surname, email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('user_activate', name=name))
+        context = {
+            'title': 'Hi, new User!',
+            'user': {
+                'name': name,
+                'surname': surname,
+                'email': email
+            }
+        }
+        return render_template('user_activate.html', **context)
     return render_template('register.html', form=form)
 
 
